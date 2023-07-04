@@ -1,6 +1,6 @@
 import { setFavorite, unsetFavorite } from '../../store/api-actions';
-import { getIsFavorite } from '../../store/film-data/selectors';
 import { useAppDispatch, useAppSelector } from '../../hooks/';
+import { getFavoriteFilms } from '../../store/favorite-films-data/selectors';
 
 type MyListButtonProps = {
   id: string;
@@ -8,7 +8,8 @@ type MyListButtonProps = {
 
 function MyListButton({ id }: MyListButtonProps) {
   const dispatch = useAppDispatch();
-  const isFavorite = useAppSelector(getIsFavorite);
+  const myFilms = useAppSelector(getFavoriteFilms);
+  const isFavorite = myFilms.map((film) => film.id).includes(id);
 
   const handleClick = () => {
     if (isFavorite) {
